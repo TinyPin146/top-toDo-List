@@ -1,0 +1,43 @@
+/* CSS Reset */
+
+/* Remove margin and padding from all elements */
+* {
+    margin: 0;
+    padding: 0;
+  }
+  
+  /* Remove default styling of headings */
+  h1, h2, h3, h4, h5, h6 {
+    font-weight: normal;
+  }
+  
+  /* Remove default styling of lists */
+  ul, ol {
+    list-style: none;
+  }
+  
+  /* Remove default styling of links */
+  a {
+    text-decoration: none;
+    color: inherit;
+  }
+  
+  /* Remove default styling of tables */
+  table {
+    border-collapse: collapse;
+    border-spacing: 0;
+  }
+  
+  /* Remove default styling of images */
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+  
+  /* Remove default styling of forms */
+  input, textarea, select {
+    font: inherit;
+    color: inherit;
+    background-color: transparent;
+    border: none;
+  }  

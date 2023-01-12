@@ -1,19 +1,97 @@
+:root {
+    --grey: rgb(128,128,128);
+    --black: rgb(0,0,0);
+    --white: rgb(255,255,255);
+    --orange: rgb(184,93,19);
+}
+
 html {
+    font-family: monospace;
+
+    position: relative;
+}
+
+.site-wrapper {
     width: 100vw;
     height: 100vh;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    grid-template-rows: auto 1fr auto;
+}
+
+header {
+    background-color: var(--grey);
+    grid-column: span 2;
+
+    display: flex;
+
+    padding: .7rem;
+}
+header h1 {
+    margin-right: 20px;
+}
+header button {
+    border: none;
+    background: var(--white);
+
+    padding: 10px 20px;
+    border-radius: 10px;
+
+    font-size: 1rem;
+    box-shadow: 3px 3px var(--black);
+}
+header button:hover {
+    box-sizing: border-box;
+    outline: 1px solid var(--orange);
+}
+header button:active {
+    box-shadow: none;
+    transform: translate(3px, 3px);
+}
+
+.sidebar {
+    padding: .7rem;
+
+    background-color: var(--orange);
+}
+.sidebar > .container--main-menu {
+    margin-bottom: 3rem;
+}
+
+main {
+    padding: .7rem;
+}
+
+footer {
+    grid-column: span 2;
+
+    padding: .7rem;
+
+    background: var(--black);
+    color: var(--white);
 }
 
 .wrapper--task-intake {
     width: 100vw;
     height: 100vh;
 
+    position: absolute;
+    top: 0;
+    left: 0;
+
     display: flex;
     justify-content: center;
     align-items: center;
+
+    background-color: rgba(0, 0, 0, .5);
 }
 
 .task-intake {
+    width: 50vw;
+    height: 30vh;
     display: grid;
+
+    background-color: var(--orange);
 }
 
 .radio--priority-wrapper {
@@ -21,4 +99,8 @@ html {
 }
 .radio--priority-wrapper > div {
     margin-right: 20px;
+}
+
+.hidden { /*! HIDDEN */
+    display: none;
 }

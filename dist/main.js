@@ -1,1 +1,1 @@
-(()=>{"use strict";console.log("works")})();
+(()=>{"use strict";const t=document.querySelector(".button--new-task"),e=document.querySelector(".wrapper--task-intake");t.addEventListener("click",(function(){e.classList.toggle("hidden")})),e.addEventListener("click",(function(t){this===t.target&&t.target.classList.toggle("hidden")}))})();
