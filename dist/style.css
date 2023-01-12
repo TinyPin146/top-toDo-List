@@ -1,3 +1,24 @@
-p {
-    color: red;
+html {
+    width: 100vw;
+    height: 100vh;
+}
+
+.wrapper--task-intake {
+    width: 100vw;
+    height: 100vh;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.task-intake {
+    display: grid;
+}
+
+.radio--priority-wrapper {
+    display: flex;
+}
+.radio--priority-wrapper > div {
+    margin-right: 20px;
 }

@@ -9,6 +9,54 @@
     <script src="./main.js"></script>
 </head>
 <body>
-    <p>test</p>
+    <header>
+
+    </header>
+    <div class="sidebar">
+
+    </div>
+    <main class="content-holder">
+
+    </main>
+    <footer>
+        
+    </footer>
+
+    <div class="wrapper--task-intake">
+        <div class="task-intake form">
+            <form action="./index.html" method="post">
+                <div class="text--task-description">
+                    <label for="task-description">Description</label>
+                    <input type="text" name="task-description" id="task-description">
+                </div>
+                <div class="radio--priority-wrapper">
+                    <div class="radio--low-priority radio-element">
+                        <label for="low-priority">Low 🔽</label>
+                        <input type="radio" name="priority" id="low-priority" value="low" required>
+                    </div>
+                    <div class="radio--normal-priority radio-element">
+                        <label for="normal-priority">Normal</label>
+                        <input type="radio" name="priority" id="normal-priority" value="normal" required checked>
+                    </div>
+                    <div class="radio--medium-priority radio-element">
+                        <label for="medium-priority">Medium 🔼</label>
+                        <input type="radio" name="priority" id="medium-priority" value="medium" required>
+                    </div>
+                    <div class="radio--high-priority">
+                        <label for="high-priority">High ⏫</label>
+                        <input type="radio" name="priority" id="high-priority" value="high" required>
+                    </div>
+                </div>
+                <div class="date--due-date">
+                    <label for="due-date">Due date:</label>
+                    <input type="date" name="due-date" id="due-date">
+                </div>
+                <div class="button--confirm-buttons">
+                    <button type="button">Confirm</button>
+                    <button type="button">Task is done</button>
+                </div>
+            </form>
+        </div>
+    </div>
 </body>
 </html>
