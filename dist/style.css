@@ -57,6 +57,14 @@ header button:active {
 .sidebar > .container--main-menu {
     margin-bottom: 3rem;
 }
+.container--main-menu li {
+    padding-left: 4px;
+}
+.container--main-menu li:hover {
+    color: var(--white);
+    cursor: pointer;
+    text-decoration: underline;
+}
 
 main {
     padding: .7rem;
