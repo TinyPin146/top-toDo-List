@@ -1,4 +1,7 @@
-import { addNewProjectInput } from "./index.js";
+let projects = {};
+const addNewProjectInput = document.querySelector('#add-new-project');
+const projectsMenuUl = document.querySelector('.projects-menu');
+
 class Project {
     constructor(name) {
         this.name = name;
@@ -7,7 +10,15 @@ class Project {
 }
 
 export function addProject(e) {
-    const addNewProjectInput = document.querySelector('#add-new-project');
-    console.log(e.type);
+    if (addNewProjectInput.value === '') return;
+    const newProject = new Project(addNewProjectInput.value);
+    projects[newProject.name] = newProject;
+    console.log(projects);
+    addNewProjectToDom(newProject);
 }
 
+function addNewProjectToDom(projectObj) {
+    addNewProjectInput.value = '';
+    console.log(projectObj.name);
+    projectsMenuUl.insertAdjacentHTML('beforeend', `<li>${projectObj.name}</li>`)
+}
