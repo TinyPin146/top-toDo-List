@@ -35,7 +35,6 @@
             </div>
         </div>
         <main class="content-holder">
-            <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quasi magni quo explicabo, facilis commodi ea officia ipsam nobis perspiciatis laborum in iste deleniti officiis non? Labore a facilis provident corrupti.</p>
         </main>
         <footer>
             <p>Created by Martin Dallos</p>
@@ -47,7 +46,11 @@
 
     <div class="wrapper--task-intake hidden">
         <div class="task-intake form">
-            <form action="./index.html" method="post">
+            <form action="./index.html" method="post" id="task-intake-form">
+                <div class="text--task-name">
+                    <label for="task-name">Name</label>
+                    <input type="text" name="task-name" id="task-name">
+                </div>
                 <div class="text--task-description">
                     <label for="task-description">Description</label>
                     <input type="text" name="task-description" id="task-description">
@@ -74,9 +77,8 @@
                     <label for="due-date">Due date:</label>
                     <input type="date" name="due-date" id="due-date">
                 </div>
-                <div class="button--confirm-buttons">
-                    <button type="button">Confirm</button>
-                    <button type="button">Task is done</button>
+                <div class="div--confirm-buttons">
+                    <button id="task-confirm-btn" type="submit">Confirm</button>
                 </div>
             </form>
         </div>

@@ -65,6 +65,11 @@ header button:active {
     cursor: pointer;
     text-decoration: underline;
 }
+.sidebar li:active {
+    color: var(--white);
+    cursor: pointer;
+    text-decoration: underline;
+}
 .projects-menu {
     display: flex;
     flex-direction: column;
