@@ -1,10 +1,12 @@
-import { attachEventListener } from "./util";
+import { attachEventListener } from "./util.js";
+import { createTaskHTML } from "./addTasks.js";
 
 export let projects = {};
 export let activeProjectGlobal;
 const addNewProjectInput = document.querySelector('#add-new-project');
 const projectsMenuUl = document.querySelector('.projects-menu');
 const contentHolder = document.querySelector('.content-holder');
+
 
 class Project {
     constructor(name) {
@@ -25,6 +27,7 @@ export function addProject(name) {
         const newProject = new Project(name);
         projects[newProject.name] = newProject;    
         addNewProjectToMenu(newProject);
+        updateDomWithProject();
     }
 }
 
@@ -32,14 +35,13 @@ function addNewProjectToMenu(projectObj) {
     addNewProjectInput.value = '';
     projectsMenuUl.insertAdjacentHTML('beforeend', `<li id="${projectObj.name}">${projectObj.name}</li>`);
     attachEventListener(document.querySelector(`#${projectObj.name}`), 'click', updateDomWithProject);
+
 }
 
 function updateDomWithProject(e) {
     contentHolder.innerHTML = '';
-    const activeProject = projects[e.target.id];
+    const activeProject = e === undefined ? projects.Default : projects[e.target.id];
     activeProjectGlobal = activeProject;
-    console.log(activeProjectGlobal);
-    console.log(activeProject); //! CLG!
     const projectDiv = document.createElement('div');
     projectDiv.classList.add(`project`, `project-${activeProject.name}`);
     const template = `
@@ -48,15 +50,9 @@ function updateDomWithProject(e) {
     `;
     projectDiv.insertAdjacentHTML('afterbegin', template);
     activeProject.tasks.forEach(taskObj => {
-        const taskTemplate = `
-        <li class="task ${taskObj.name}">
-            <h4>${taskObj.name}</h4>
-            <p>${taskObj.description}</p>
-            <p>${taskObj.priority}</p>
-            <p>${taskObj.dueDate}</p>
-        </li>
-        `;
-        projectDiv.querySelector('.project-tasks').insertAdjacentHTML('beforeend', taskTemplate);
+        const currTaskHTML = createTaskHTML(taskObj);
+        projectDiv.querySelector('.project-tasks').insertAdjacentHTML('beforeend', currTaskHTML);
     });
     contentHolder.insertAdjacentElement('afterbegin', projectDiv);
 }
+

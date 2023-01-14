@@ -77,6 +77,58 @@ header button:active {
 
 main {
     padding: .7rem;
+    display: grid;
+}
+.project-tasks {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    gap: .5rem;
+    justify-content: space-evenly;
+
+    box-sizing: border-box;
+}
+.task {
+    box-sizing: border-box;
+
+    width: 95%;
+    display: grid;
+    grid-template-columns: 1fr auto;
+
+    padding: .5rem;
+
+    background-color: var(--grey);
+    border-radius: 10px;
+}
+.task > .task-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+}
+.task h4 {
+    grid-column: span 2;
+}
+.task .task-desc {
+    grid-column: span 2;
+}
+.task > .task-menu {
+    display: flex;
+    align-items: center;
+
+    border: 1px solid red;
+}
+.task > .task-menu * {
+    height: 2.5rem;
+    width: auto;
+}
+.task > .task-menu > .taskIcon-complete {
+    color: green;
+}
+.task > .task-menu > .taskIcon-delete {
+    color: red;
+}
+.task > .task-menu > .taskIcon-modify {
+    color: black;
 }
 
 footer {
