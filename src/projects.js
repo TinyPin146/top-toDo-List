@@ -1,5 +1,5 @@
 import { attachEventListener } from "./util.js";
-import { createTaskHTML } from "./addTasks.js";
+import { createTaskHTML } from "./tasks.js";
 
 export let projects = {};
 export let activeProjectGlobal;
@@ -35,7 +35,6 @@ function addNewProjectToMenu(projectObj) {
     addNewProjectInput.value = '';
     projectsMenuUl.insertAdjacentHTML('beforeend', `<li id="${projectObj.name}">${projectObj.name}</li>`);
     attachEventListener(document.querySelector(`#${projectObj.name}`), 'click', updateDomWithProject);
-
 }
 
 function updateDomWithProject(e) {

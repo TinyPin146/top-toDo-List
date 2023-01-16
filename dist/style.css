@@ -121,13 +121,20 @@ main {
     height: 2.5rem;
     width: auto;
 }
-.task > .task-menu > .taskIcon-complete {
+.taskIcon--btn {
+    border: none;
+    background: none;
+}
+.taskIcon--btn:hover {
+    opacity: .5;
+}
+.task > .task-menu > .taskIcon-complete--btn {
     color: green;
 }
-.task > .task-menu > .taskIcon-delete {
+.task > .task-menu > .taskIcon-delete--btn {
     color: red;
 }
-.task > .task-menu > .taskIcon-modify {
+.task > .task-menu > .taskIcon-modify--btn {
     color: black;
 }
 

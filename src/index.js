@@ -1,7 +1,7 @@
 import { format } from 'date-fns';
 import * as util from './util.js';
-import * as projects from './addProjects.js';
-import * as tasks from './addTasks';
+import * as projects from './projects.js';
+import * as tasks from './tasks';
 
 const buttonNewTask = document.querySelector('.button--new-task');
 export const taskIntakePopup = document.querySelector('.wrapper--task-intake');
