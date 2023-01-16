@@ -138,6 +138,16 @@ main {
     color: black;
 }
 
+.done {
+    opacity: .4;
+    border: 1px green solid;
+    border-left: 10px solid green;
+}
+.done > .taskIcon-complete--btn {
+    opacity: 1; 
+    z-index: 1;
+}
+
 footer {
     grid-column: span 2;
 

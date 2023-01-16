@@ -35,13 +35,13 @@ class Task {
 
     taskComplete(e) {
         const taskCard = e.currentTarget.closest(`.${this.name}`);
-        taskCard.style.opacity = 0.4;
-        taskCard.style.border = '1px green solid';
+        taskCard.classList.toggle('done');
 
-        const undoneBtn = `<button type="button" class="taskIcon-uncomplete--btn">Undo task</button>`
-        this.getTaskDomElem.insertAdjacentHTML('beforeend', undoneBtnTemplate);
-        undoneBtn = this.getTaskDomElem.querySelector('.taskIcon-uncomplete--btn');
-        undoneBtn.addEventListener('click');
+        // let undoneBtn = `<button type="button" class="taskIcon-uncomplete--btn">Undo task</button>`
+        // this.getTaskDomElem.insertAdjacentHTML('beforeend', undoneBtn);
+        // undoneBtn = this.getTaskDomElem.querySelector('.taskIcon-uncomplete--btn');
+        // undoneBtn.addEventListener('click', this.taskUncomplete.bind(this));
+        // undoneBtn.style.opacity = 1;
     } 
 
     taskDelete() {
@@ -60,12 +60,61 @@ class Task {
 
     taskModify(e) {
         console.log(e);
+        Task.insertModifyingForm(this.getTaskDomElem);
+    }
+
+    taskUncomplete(e) {
+        console.log(e);
     }
 
     static updateDomWithNewTask(taskObj) {
         const currentTaskTemplate = createTaskHTML(taskObj);
         document.querySelector('.project-tasks').insertAdjacentHTML('beforeend', currentTaskTemplate);
         console.log(projects);
+    }
+
+    static insertModifyingForm(taskElem) {
+        const formTemplate = `
+        <div class="task-modify-form-wrapper">
+            <form action="./index.html" method="post" id="task-modify-form">
+            <div class="text--task-name">
+                <label for="task-name">Name</label>
+                <input type="text" name="task-name" id="task-name">
+            </div>
+            <div class="text--task-description">
+                <label for="task-description">Description</label>
+                <input type="text" name="task-description" id="task-description">
+            </div>
+            <div class="radio--priority-wrapper">
+                <div class="radio--low-priority radio-element">
+                    <label for="low-priority">Low 🔽</label>
+                    <input type="radio" name="priority" id="low-priority" value="low" required>
+                </div>
+                <div class="radio--normal-priority radio-element">
+                    <label for="normal-priority">Normal</label>
+                    <input type="radio" name="priority" id="normal-priority" value="normal" required checked>
+                </div>
+                <div class="radio--medium-priority radio-element">
+                    <label for="medium-priority">Medium 🔼</label>
+                    <input type="radio" name="priority" id="medium-priority" value="medium" required>
+                </div>
+                <div class="radio--high-priority">
+                    <label for="high-priority">High ⏫</label>
+                    <input type="radio" name="priority" id="high-priority" value="high" required>
+                </div>
+            </div>
+            <div class="date--due-date">
+                <label for="due-date">Due date:</label>
+                <input type="date" name="due-date" id="due-date">
+            </div>
+            <div class="div--confirm-buttons">
+                <button id="task-confirm-btn" type="submit">Confirm</button>
+            </div>
+                </form>
+        </div>
+
+        `;
+        taskElem.insertAdjacentHTML('beforeend', formTemplate)
     }
 }
 
