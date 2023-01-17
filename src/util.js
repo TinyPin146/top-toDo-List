@@ -12,3 +12,7 @@ export function attachEventListener(elem, event, cbFunc) {
 
     document.querySelector('header').addEventListener
 }
+
+export function removeEventListener(elem, event, cbFunc) {
+    
+}
