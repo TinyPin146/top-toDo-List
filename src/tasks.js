@@ -135,7 +135,6 @@ class Task {
     static updateDomWithNewTask(taskObj) {
         const currentTaskTemplate = createTaskHTML(taskObj);
         document.querySelector('.project-tasks').insertAdjacentHTML('beforeend', currentTaskTemplate);
-        console.log(projects);
     }
 }
 
@@ -151,12 +150,25 @@ export function addTask(event) {
 }
 
 export function createTaskHTML(taskObj) {
+    const priorityIcon = getPriorityIcon(taskObj.priority);
+    function getPriorityIcon(priority) {
+        switch (priority) {
+            case 'low': 
+                return '🔽';
+            case 'normal':
+                return '▶️';
+            case 'medium':
+                return '🔼';
+            case 'high':
+                return '⏫' 
+        }
+    }
     const taskTemplate = `
-    <li class="task ${taskObj.name}">
+    <li class="task ${taskObj.name}" data-priority="${taskObj.priority}">
         <div class="task-content">
             <h4>${taskObj.name}</h4>
             <p class="task-desc">${taskObj.description}</p>
-            <p>${taskObj.priority}</p>
+            <p>${priorityIcon}</p>
             <p>${taskObj.dueDate}</p>
         </div>
         <div class="task-menu">

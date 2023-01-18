@@ -13,6 +13,12 @@ export function attachEventListener(elem, event, cbFunc) {
     document.querySelector('header').addEventListener
 }
 
-export function removeEventListener(elem, event, cbFunc) {
-    
+export function getAllProjectTasks(projects) {
+    let allTasks = [];
+    Object.values(projects).forEach(project => {
+        project.tasks.forEach(task => {
+            allTasks.push(task);
+        });
+    });
+    return allTasks;
 }

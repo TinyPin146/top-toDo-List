@@ -74,6 +74,16 @@ header button:active {
     display: flex;
     flex-direction: column;
 }
+#add-new-project-btn {
+    border: none;
+    background: none;
+
+    font-size: 2rem;
+    font-weight: 800;
+}
+#add-new-project-btn:hover {
+    scale: 1.5;
+}
 
 main {
     padding: .7rem;
@@ -82,7 +92,7 @@ main {
 .project-tasks {
     width: 100%;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
     gap: .5rem;
     justify-content: space-evenly;
 
@@ -91,7 +101,7 @@ main {
 .task {
     box-sizing: border-box;
 
-    width: 95%;
+    max-width: 490px;
     display: grid;
     grid-template-columns: 1fr auto;
 
@@ -100,6 +110,19 @@ main {
     background-color: var(--grey);
     border-radius: 10px;
 }
+[data-priority="low"] {
+    border: green 5px solid;
+}
+[data-priority="normal"] {
+    border: blue 5px solid;
+}
+[data-priority="medium"] {
+    border: yellow 5px solid;
+}
+[data-priority="high"] {
+    border: orange 5px solid;
+}
+
 .task > .task-content {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -114,8 +137,6 @@ main {
 .task > .task-menu {
     display: flex;
     align-items: center;
-
-    border: 1px solid red;
 }
 .task > .task-menu * {
     height: 2.5rem;
