@@ -38,6 +38,7 @@ class Project {
             projectDiv.querySelector('.project-tasks').insertAdjacentHTML('beforeend', currTaskHTML);
             setTimeout(() => {
                 taskObj.attachEventListener();
+                taskObj.checkCompletion();
             }, 5);
         });
         contentHolder.insertAdjacentElement('afterbegin', projectDiv);
@@ -78,6 +79,7 @@ function updateDomWithSortedTasks(name, taskList) {
         taskUL.insertAdjacentHTML('beforeend', taskElem.getTaskCardElem);
         setTimeout(() => {
             taskElem.attachEventListener();
+            taskElem.checkCompletion();
         }, 5)
     })
     contentHolder.insertAdjacentElement('afterbegin', projectDiv);

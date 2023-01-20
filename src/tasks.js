@@ -12,6 +12,7 @@ class Task {
         this.description = desc;
         this.priority = prio;
         this.dueDate = dueDate;
+        this.isCompleted = false;
         this.project = activeProjectGlobal.name;
         this.boundTaskUncomplete = this.taskUncomplete.bind(this);
         this.boundTaskComplete = this.taskComplete.bind(this);
@@ -36,6 +37,9 @@ class Task {
     set setNewDueDate(newValue) {
         if (!!newValue) this.dueDate = newValue
     }
+    set setCompletion(newValue) {
+        this.isCompleted = newValue;
+    }
 
     attachEventListener() {
         // * taskCard
@@ -51,7 +55,13 @@ class Task {
         taskIconModifyBtn.addEventListener('click', this.taskModify.bind(this));
     }
 
+    checkCompletion() {
+        console.log('running completion check');
+        if (this.isCompleted) this.taskComplete();
+    }
+
     taskComplete() {
+        this.setCompletion = true;
         const taskCard = this.getTaskDomElem;
         const taskIconCompleteBtn = taskCard.querySelector('.taskIcon-complete--btn');
         const undoTaskBtn = taskCard.querySelector('.undo-task--btn');
@@ -64,6 +74,7 @@ class Task {
     } 
 
     taskUncomplete() {
+        this.setCompletion = false;
         const taskCard = this.getTaskDomElem;
         const undoTaskBtn = taskCard.querySelector('.undo-task--btn');
         const taskIconCompleteBtn = taskCard.querySelector('.taskIcon-complete--btn');
