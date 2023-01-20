@@ -13,6 +13,16 @@ export function attachEventListener(elem, event, cbFunc) {
     document.querySelector('header').addEventListener
 }
 
+export function getAllProjectTaskElems(projects) {
+    let allTasks = [];
+    Object.values(projects).forEach(project => {
+        project.tasks.forEach(task => {
+            allTasks.push(task.taskCardElem);
+        });
+    });
+    return allTasks;
+}
+
 export function getAllProjectTasks(projects) {
     let allTasks = [];
     Object.values(projects).forEach(project => {

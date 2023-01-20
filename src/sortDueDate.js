@@ -1,4 +1,4 @@
-import { getAllProjectTasks } from "./util.js";
+import { getAllProjectTaskElems, getAllProjectTasks } from "./util.js";
 import { projects, addProject } from "./projects.js";
 import { format, formatDistance, formatRelative, subDays, formatDistanceToNowStrict, isPast, isToday, isYesterday, isTomorrow, isFuture } from 'date-fns'
 
@@ -29,32 +29,36 @@ function sortTasksOnDueDate(e) {
                 const taskDueDate = new Date(task.dueDate);
                 if (isYesterday(taskDueDate)) return task;
             });
-            return yesterdayTasks;
+            addProject('Yesterday', yesterdayTasks);
+            break;
         case 'Today': 
             const todayTasks = allTasks.filter(task => {
                 const taskDueDate = new Date(task.dueDate);
                 if (isToday(taskDueDate)) return task;
             });
-            return todayTasks;
+            addProject('Today', todayTasks);
+            break;
         case 'Tomorrow': 
             const tomorrowTasks = allTasks.filter(task => {
                 const taskDueDate = new Date(task.dueDate);
                 if (isTomorrow(taskDueDate)) return task;
             });
-            return tomorrowTasks;
+            addProject('Today', tomorrowTasks);
+            break;
         case 'Upcoming': 
             const upcomingTasks = allTasks.filter(task => {
                 const taskDueDate = new Date(task.dueDate);
                 if (isFuture(taskDueDate)) return task;
             });
-            return upcomingTasks;
+            addProject('Upcoming', upcomingTasks);
+            break;
         case 'Anytime':
             const anytimeTasks = allTasks.filter(task => {
                 const taskDueDate = new Date(task.dueDate);
                 if (isNaN(taskDueDate.getTime())) return task;
             });
-            return anytimeTasks;
-
+            addProject('Anytime', anytimeTasks);
+            break;
         default:
             console.log('something is not right');
     }

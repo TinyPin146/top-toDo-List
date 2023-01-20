@@ -8,12 +8,7 @@ export const taskIntakePopup = document.querySelector('.wrapper--task-intake');
 const addNewProjectInputBtn = document.querySelector('#add-new-project-btn');
 const taskIntakeForm = document.querySelector('#task-intake-form');
 
-
-function handleNewTaskBtn() {
-    util.toggleHide(taskIntakePopup);
-}
-
-buttonNewTask.addEventListener('click', handleNewTaskBtn);
+buttonNewTask.addEventListener('click', () => util.toggleHide(taskIntakePopup));
 taskIntakePopup.addEventListener('click', util.toggleHideOnPopup);
 addNewProjectInputBtn.addEventListener('click', projects.addProject);
 taskIntakeForm.addEventListener('submit', tasks.addTask);
