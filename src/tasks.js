@@ -1,10 +1,7 @@
-// TODO A felhaszn. hozzáadja a taskot, ezután az megjelenik az oldalon és egy projekt részévé válik.
-// ! Kell egy task és egy projektgenerátor és valami, ami a taskokat hozzárendeli és berakja a taskok alá
-
 import { projects, activeProjectGlobal } from "./projects.js";
 import { toggleHide } from "./util.js";
 import { taskIntakePopup } from "./index.js";
-import { da } from "date-fns/locale";
+import { populateStorage } from "./localStorage.js";
 
 class Task {
     constructor(name, desc, prio, dueDate) {
@@ -71,6 +68,7 @@ class Task {
         
         undoTaskBtn.classList.toggle('hidden');
         undoTaskBtn.addEventListener('click', this.boundTaskUncomplete);
+        populateStorage();
     } 
 
     taskUncomplete() {
@@ -83,7 +81,8 @@ class Task {
         taskCard.classList.toggle('done');
         
         undoTaskBtn.classList.toggle('hidden');
-        taskIconCompleteBtn.addEventListener('click', this.boundTaskComplete)
+        taskIconCompleteBtn.addEventListener('click', this.boundTaskComplete);
+        populateStorage();
     }
 
     taskDelete() {
@@ -98,6 +97,7 @@ class Task {
         });
         projects[this.project].tasks.splice(indexOfTask, 1)
         this.getTaskDomElem.parentElement.removeChild(this.getTaskDomElem);
+        populateStorage();
     }
 
     taskModify(e) {
@@ -123,6 +123,7 @@ class Task {
         this.setNewDueDate = formData.get('due-date');
         this.updateTaskContentDOM(this);
         taskModFormWrapper.classList.toggle('hidden');
+        populateStorage();
     }
 
     updateTaskContentDOM(taskObj) {
@@ -231,6 +232,7 @@ export function addTask(event) {
     const formData = new FormData(event.currentTarget);
     const newTask = new Task(formData.get('task-name'), formData.get('task-description'), formData.get('priority'), formData.get('due-date'));
     activeProjectGlobal.tasks.push(newTask);
+    populateStorage();
 
     Task.updateDomWithNewTask(newTask);
     newTask.attachEventListener();

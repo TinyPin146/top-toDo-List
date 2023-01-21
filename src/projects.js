@@ -1,6 +1,6 @@
 import { attachEventListener } from "./util.js";
-import { createTaskHTML } from "./tasks.js";
 import { menuNames } from "./sortDueDate.js";
+import { populateStorage } from "./localStorage.js";
 
 export let projects = {};
 export let activeProjectGlobal;
@@ -8,8 +8,7 @@ const addNewProjectInput = document.querySelector('#add-new-project');
 const projectsMenuUl = document.querySelector('.projects-menu');
 const contentHolder = document.querySelector('.content-holder');
 
-
-class Project {
+export class Project {
     constructor(name) {
         this.name = name;
         this.tasks = [];
@@ -49,6 +48,7 @@ export function addProject(name, taskList) {
     const newProjectName = addNewProjectInput.value;
     if (Object.keys(projects).length === 0) {
         addNewProjToProjectObj(name);
+        populateStorage();
         return;
     };
     if (menuNames.includes(name)) {
@@ -62,6 +62,7 @@ export function addProject(name, taskList) {
         projects[newProject.name] = newProject;    
         Project.addNewProjectToMenu(newProject);
         Project.updateDomWithProject();
+        populateStorage();
     } 
 }
 

@@ -13,4 +13,6 @@ taskIntakePopup.addEventListener('click', util.toggleHideOnPopup);
 addNewProjectInputBtn.addEventListener('click', projects.addProject);
 taskIntakeForm.addEventListener('submit', tasks.addTask);
 
-projects.addProject('Default');
+if (!localStorage.getItem('projects')) {
+    projects.addProject('Default');
+}
