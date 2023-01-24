@@ -1,14 +1,15 @@
-import { projects, activeProjectGlobal } from "./projects.js";
+import { projects, activeProjectGlobal, Project } from "./projects.js";
 import { toggleHide } from "./util.js";
 import { taskIntakePopup } from "./index.js";
 import { populateStorage } from "./localStorage.js";
 
-class Task {
+export class Task {
     constructor(name, desc, prio, dueDate) {
         this.name = name;
         this.description = desc;
         this.priority = prio;
         this.dueDate = dueDate;
+        this.id = (Date.now()).toString();
         this.isCompleted = false;
         this.project = activeProjectGlobal.name;
         this.boundTaskUncomplete = this.taskUncomplete.bind(this);
@@ -17,7 +18,7 @@ class Task {
     }
 
     get getTaskDomElem() {
-        return document.querySelector(`.${this.name}`);
+        return document.getElementById(`${this.id}`);
     }
     get getTaskCardElem() {
         return Task.createTaskHTML(this)
@@ -41,6 +42,7 @@ class Task {
     attachEventListener() {
         // * taskCard
         const taskDomElem = this.getTaskDomElem;
+        console.log("🚀 ~ file: tasks.js:45 ~ Task ~ attachEventListener ~ taskDomElem", taskDomElem)
         // * Complete icon & eventListener
         const taskIconCompleteBtn = taskDomElem.querySelector('.taskIcon-complete--btn');
         taskIconCompleteBtn.addEventListener('click', this.boundTaskComplete); 
@@ -53,7 +55,6 @@ class Task {
     }
 
     checkCompletion() {
-        console.log('running completion check');
         if (this.isCompleted) this.taskComplete();
     }
 
@@ -93,35 +94,35 @@ class Task {
             return task.name
         })
         .findIndex(taskName => {
-            return taskName === this.name;
+            return taskName === this.id;
         });
         projects[this.project].tasks.splice(indexOfTask, 1)
         this.getTaskDomElem.parentElement.removeChild(this.getTaskDomElem);
         populateStorage();
     }
 
-    taskModify(e) {
+    taskModify() {
         const taskCard = this.getTaskDomElem;
         const taskModFormWrapper = taskCard.querySelector('.task-modify-form-wrapper');
-        const taskModForm = taskCard.querySelector('#task-modify-form')
+        const taskModForm = taskCard.querySelector('#task-modify-form');
         taskModFormWrapper.classList.toggle('hidden');
-        taskModForm.addEventListener('submit', this.boundHandleTaskMod)
+        taskModForm.addEventListener('submit', this.boundHandleTaskMod);
     }
 
     taskModUpdateHandle(event) {
         event.preventDefault();
+        console.log(event);
         const formData = new FormData(event.currentTarget);
         const taskCard = this.getTaskDomElem;
         const taskModFormWrapper = taskCard.querySelector('.task-modify-form-wrapper');
-
-        taskCard.classList.remove(`${this.name}`)
+        
         this.setNewName = formData.get('task-name');
-        taskCard.classList.add(`${this.name}`)
-
+        
         this.setNewDescription = formData.get('task-description');
         this.setNewPriority = formData.get('priority');
         this.setNewDueDate = formData.get('due-date');
         this.updateTaskContentDOM(this);
+        taskCard.dataset.priority = this.priority;
         taskModFormWrapper.classList.toggle('hidden');
         populateStorage();
     }
@@ -135,29 +136,30 @@ class Task {
         <div class="task-content">
             <h4>${taskObj.name}</h4>
             <p class="task-desc">${taskObj.description}</p>
-            <p>${taskObj.priority}</p>
+            <p>${Task.getPriorityIcon(taskObj.priority)}</p>
             <p>${taskObj.dueDate}</p>
         </div>
         `;
         taskCard.insertAdjacentHTML('afterbegin', updatedTaskContent);
     }
 
-    static createTaskHTML(taskObj) {
-        const priorityIcon = getPriorityIcon(taskObj.priority);
-        function getPriorityIcon(priority) {
-            switch (priority) {
-                case 'low': 
-                    return '🔽';
-                case 'normal':
-                    return '▶️';
-                case 'medium':
-                    return '🔼';
-                case 'high':
-                    return '⏫' 
-            }
+    static getPriorityIcon(priority) {
+        switch (priority) {
+            case 'low': 
+                return '🔽';
+            case 'normal':
+                return '▶️';
+            case 'medium':
+                return '🔼';
+            case 'high':
+                return '⏫' 
         }
+    }
+
+    static createTaskHTML(taskObj) {
+        const priorityIcon = Task.getPriorityIcon(taskObj.priority);
         const taskTemplate = `
-        <li class="task ${taskObj.name}" data-priority="${taskObj.priority}">
+        <li class="task" id="${taskObj.id}" data-priority="${taskObj.priority}">
             <div class="task-content">
                 <h4>${taskObj.name}</h4>
                 <p class="task-desc">${taskObj.description}</p>

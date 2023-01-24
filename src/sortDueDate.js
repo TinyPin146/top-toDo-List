@@ -1,6 +1,6 @@
-import { getAllProjectTaskElems, getAllProjectTasks } from "./util.js";
-import { projects, addProject } from "./projects.js";
-import { format, formatDistance, formatRelative, subDays, formatDistanceToNowStrict, isPast, isToday, isYesterday, isTomorrow, isFuture } from 'date-fns'
+import { getAllProjectTasks } from "./util.js";
+import { projects, addProject, contentHolder } from "./projects.js";
+import { isPast, isToday, isYesterday, isTomorrow, isFuture } from 'date-fns'
 
 const mainMenu = document.querySelector('.main-menu');
 const overdueMenuItem = mainMenu.querySelector('.overdue');
@@ -67,3 +67,23 @@ function sortTasksOnDueDate(e) {
 menuItems.forEach(menuItem => {
     menuItem.addEventListener('click', sortTasksOnDueDate);
 })
+
+export function updateDomWithSortedTasks(name, taskList) {
+    contentHolder.innerHTML = '';
+    const projectDiv = document.createElement('div');
+    projectDiv.classList.add(`sorted`, `sorted-${name}`);
+    const template = `
+        <h3>${name}</h3>
+        <ul class="sorted-tasks"></ul>    
+    `;
+    projectDiv.insertAdjacentHTML('afterbegin', template);
+    const taskUL = projectDiv.querySelector('.sorted-tasks');
+    taskList.forEach(taskElem => {
+        taskUL.insertAdjacentHTML('beforeend', taskElem.getTaskCardElem);
+        setTimeout(() => {
+            taskElem.attachEventListener();
+            taskElem.checkCompletion();
+        }, 5)
+    })
+    contentHolder.insertAdjacentElement('afterbegin', projectDiv);
+}
