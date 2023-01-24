@@ -9,12 +9,14 @@ const todayMenuItem = mainMenu.querySelector('.today');
 const tomorrowMenuItem = mainMenu.querySelector('.tomorrow');
 const upcomingMenuItem = mainMenu.querySelector('.upcoming');
 const anytimeMenuItem = mainMenu.querySelector('.anytime');
-const menuItems = [overdueMenuItem, yesterdayMenuItem, todayMenuItem, tomorrowMenuItem, upcomingMenuItem, anytimeMenuItem];
-export const menuNames = ['Overdue', 'Yesterday', 'Today', 'Tomorrow', 'Upcoming', 'Anytime']
+const completedMenuItem = mainMenu.querySelector('.completed');
+
+const menuItems = [overdueMenuItem, yesterdayMenuItem, todayMenuItem, tomorrowMenuItem, upcomingMenuItem, anytimeMenuItem, completedMenuItem];
+export const menuNames = ['Overdue', 'Yesterday', 'Today', 'Tomorrow', 'Upcoming', 'Anytime', 'Completed']
 
 function sortTasksOnDueDate(e) {
-    const allTasks = getAllProjectTasks(projects);
     const selectedMenuItem = e.currentTarget.textContent;
+    const allTasks = getAllProjectTasks(projects);
 
     switch (selectedMenuItem) {
         case 'Overdue':
@@ -59,9 +61,25 @@ function sortTasksOnDueDate(e) {
             });
             addProject('Anytime', anytimeTasks);
             break;
+        case 'Completed':
+            addCompletedTasks();
+            break;
         default:
-            console.log('something is not right');
+            throw new Error('Something is not right');
     }
+}
+
+export function addCompletedTasks() {
+    const allTasks = getAllProjectTasks(projects);
+    const completedTasks = allTasks.filter(task => {
+        return task.isCompleted;
+    });
+    addProject('Completed', completedTasks);
+    const sortedTaskElems = document.querySelectorAll('.task');
+    setTimeout(() => {
+        sortedTaskElems.forEach(el => {
+        el.classList.remove('hidden');
+})}, 10)
 }
 
 menuItems.forEach(menuItem => {

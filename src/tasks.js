@@ -2,6 +2,7 @@ import { projects, activeProjectGlobal, Project } from "./projects.js";
 import { toggleHide } from "./util.js";
 import { taskIntakePopup } from "./index.js";
 import { populateStorage } from "./localStorage.js";
+import { addCompletedTasks } from "./sortTasks.js";
 
 export class Task {
     constructor(name, desc, prio, dueDate) {
@@ -42,7 +43,6 @@ export class Task {
     attachEventListener() {
         // * taskCard
         const taskDomElem = this.getTaskDomElem;
-        console.log("🚀 ~ file: tasks.js:45 ~ Task ~ attachEventListener ~ taskDomElem", taskDomElem)
         // * Complete icon & eventListener
         const taskIconCompleteBtn = taskDomElem.querySelector('.taskIcon-complete--btn');
         taskIconCompleteBtn.addEventListener('click', this.boundTaskComplete); 
@@ -69,6 +69,7 @@ export class Task {
         
         undoTaskBtn.classList.toggle('hidden');
         undoTaskBtn.addEventListener('click', this.boundTaskUncomplete);
+        taskCard.classList.add('hidden');
         populateStorage();
     } 
 
@@ -83,6 +84,8 @@ export class Task {
         
         undoTaskBtn.classList.toggle('hidden');
         taskIconCompleteBtn.addEventListener('click', this.boundTaskComplete);
+        taskCard.classList.remove('hidden');
+        addCompletedTasks();
         populateStorage();
     }
 
@@ -111,7 +114,6 @@ export class Task {
 
     taskModUpdateHandle(event) {
         event.preventDefault();
-        console.log(event);
         const formData = new FormData(event.currentTarget);
         const taskCard = this.getTaskDomElem;
         const taskModFormWrapper = taskCard.querySelector('.task-modify-form-wrapper');
@@ -225,7 +227,10 @@ export class Task {
 
     static updateDomWithNewTask(taskObj) {
     const currentTaskTemplate = taskObj.getTaskCardElem;
-        document.querySelector('.project-tasks').insertAdjacentHTML('beforeend', currentTaskTemplate);
+    const taskAreaElem = document.querySelector('.project-tasks');
+    if (!taskAreaElem) return;
+        
+    taskAreaElem.insertAdjacentHTML('beforeend', currentTaskTemplate);
     }
 }
 

@@ -7,7 +7,7 @@ export function populateStorage() {
 }
 
 function loadProjectsInLclStorage() {
-    if(localStorage.getItem('projects') && projects !== {}) {
+    if(localStorage.length) {
         const projectsInLocalStorage = JSON.parse(localStorage.getItem('projects'));
         for (const project in projectsInLocalStorage) {
             const loadedProject = new Project(projectsInLocalStorage[project].name);

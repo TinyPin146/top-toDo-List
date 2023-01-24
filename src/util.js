@@ -9,8 +9,6 @@ export function toggleHideOnPopup(e) {
 
 export function attachEventListener(elem, event, cbFunc) {
     elem.addEventListener(event, cbFunc);
-
-    document.querySelector('header').addEventListener
 }
 
 export function getAllProjectTaskElems(projects) {
