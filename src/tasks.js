@@ -40,7 +40,7 @@ export class Task {
         this.isCompleted = newValue;
     }
 
-    attachEventListener() {
+    attachEventListenerToTask() {
         // * taskCard
         const taskDomElem = this.getTaskDomElem;
         // * Complete icon & eventListener
@@ -105,10 +105,13 @@ export class Task {
     }
 
     taskModify() {
+        console.log('working');
         const taskCard = this.getTaskDomElem;
+        console.log(taskCard.listeners);
         const taskModFormWrapper = taskCard.querySelector('.task-modify-form-wrapper');
         const taskModForm = taskCard.querySelector('#task-modify-form');
         taskModFormWrapper.classList.toggle('hidden');
+        taskCard.classList.toggle('show-form');
         taskModForm.addEventListener('submit', this.boundHandleTaskMod);
     }
 
@@ -126,6 +129,7 @@ export class Task {
         this.updateTaskContentDOM(this);
         taskCard.dataset.priority = this.priority;
         taskModFormWrapper.classList.toggle('hidden');
+        taskCard.classList.toggle('show-form');
         populateStorage();
     }
 
@@ -182,7 +186,7 @@ export class Task {
             <div>
                 <button class="undo-task--btn hidden">Undo task</button>
             </div>
-            <div class="task-modify-form-wrapper hidden">
+            <div class="task-modify-form-wrapper form hidden">
             <form action="./index.html" method="post" id="task-modify-form">
             <div class="text--task-name">
                 <label for="task-name">Name</label>
@@ -195,26 +199,26 @@ export class Task {
             <div class="radio--priority-wrapper">
                 <div class="radio--low-priority radio-element">
                     <label for="low-priority">Low 🔽</label>
-                    <input type="radio" name="priority" id="low-priority" value="low" required>
+                    <input type="radio" name="priority" id="low-priority" value="low">
                 </div>
                 <div class="radio--normal-priority radio-element">
                     <label for="normal-priority">Normal</label>
-                    <input type="radio" name="priority" id="normal-priority" value="normal" required checked>
+                    <input type="radio" name="priority" id="normal-priority" value="normal">
                 </div>
                 <div class="radio--medium-priority radio-element">
                     <label for="medium-priority">Medium 🔼</label>
-                    <input type="radio" name="priority" id="medium-priority" value="medium" required>
+                    <input type="radio" name="priority" id="medium-priority" value="medium">
                 </div>
                 <div class="radio--high-priority">
                     <label for="high-priority">High ⏫</label>
-                    <input type="radio" name="priority" id="high-priority" value="high" required>
+                    <input type="radio" name="priority" id="high-priority" value="high">
                 </div>
             </div>
             <div class="date--due-date">
                 <label for="due-date">Due date:</label>
                 <input type="date" name="due-date" id="due-date">
             </div>
-            <div class="div--confirm-buttons">
+            <div class="div--confirm-button">
                 <button id="task-mod-confirm-btn" type="submit">Confirm</button>
             </div>
                 </form>
@@ -242,6 +246,6 @@ export function addTask(event) {
     populateStorage();
 
     Task.updateDomWithNewTask(newTask);
-    newTask.attachEventListener();
+    newTask.attachEventListenerToTask();
     toggleHide(taskIntakePopup);
 }

@@ -27,7 +27,7 @@ export class Project {
         attachEventListener(document.querySelector(`#${projectNameRemovedSpace}-project-menu-li`), 'click', Project.updateDomWithProject);
         const currentProjMenuElem = projectsMenuUl.querySelector(`#${projectNameRemovedSpace}-project-menu-div`) 
         if (currentProjMenuElem.firstElementChild.textContent !== defaultProjectName) {
-            const projDeleteBtnTemplate = `<div><button class="project-delete" id="${projectNameRemovedSpace}-project-delete" type="button">Del</button></div>`;
+            const projDeleteBtnTemplate = `<div><button class="project-delete" id="${projectNameRemovedSpace}-project-delete" type="button">🗑️</button></div>`;
             currentProjMenuElem.insertAdjacentHTML('beforeend', projDeleteBtnTemplate);
             attachEventListener(document.querySelector(`#${projectNameRemovedSpace}-project-delete`), 'click', Project.deleteProject);
         }
@@ -49,7 +49,7 @@ export class Project {
             const currTaskHTML = taskObj.getTaskCardElem;
             projectDiv.querySelector('.project-tasks').insertAdjacentHTML('beforeend', currTaskHTML);
             setTimeout(() => {
-                taskObj.attachEventListener();
+                taskObj.attachEventListenerToTask();
                 taskObj.checkCompletion();
             }, 5);
         });

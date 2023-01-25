@@ -1,8 +1,13 @@
 :root {
-    --grey: rgb(128,128,128);
-    --black: rgb(0,0,0);
-    --white: rgb(255,255,255);
-    --orange: rgb(184,93,19);
+    --black: #000;
+    --white: #fff;
+    --grey: #E5E5E5;
+    --orange: #F5A623;
+    --blue: #3F51B5;
+    --green: #8BC34A;
+    --brown: #795548;
+    --purple: #9C27B0;
+    --red: rgb(179, 62, 62);
 }
 
 html {
@@ -20,7 +25,7 @@ html {
 }
 
 header {
-    background-color: var(--grey);
+    background-color: var(--blue);
     grid-column: span 2;
 
     display: flex;
@@ -29,15 +34,18 @@ header {
 }
 header h1 {
     margin-right: 20px;
+    font-size: 2.5rem;
+    font-weight: 900;
 }
 header button {
     border: none;
-    background: var(--white);
+    background: var(--grey);
 
     padding: 10px 20px;
     border-radius: 10px;
 
-    font-size: 1rem;
+    font-size: 1.2rem;
+    font-weight: 500;
     box-shadow: 3px 3px var(--black);
 }
 header button:hover {
@@ -54,11 +62,15 @@ header button:active {
 
     background-color: var(--orange);
 }
+.sidebar h3 {
+    font-size: 1.5rem;
+}
 .sidebar > .container--main-menu {
     margin-bottom: 3rem;
 }
 .sidebar li {
     padding-left: 4px;
+    font-size: 1.2rem;
 }
 .sidebar li:hover {
     color: var(--white);
@@ -85,9 +97,34 @@ header button:active {
     scale: 1.5;
 }
 
+.project-menu-li {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    margin-bottom: .1rem;
+}
+
+.project-menu-li button {
+    border: none;
+    background: none;
+
+    transition: all .1s ease;
+}
+
+.project-menu-li button:hover {
+    transform: scale(1.2);
+}
+
 main {
-    padding: .7rem;
+    padding: 1rem 1.5rem;
     display: grid;
+    background: var(--grey);
+}
+.project h3 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
 }
 .project-tasks {
     width: 100%;
@@ -107,40 +144,59 @@ main {
 
     padding: .5rem;
 
-    background-color: var(--grey);
+    background-color: var(--orange);
     border-radius: 10px;
+    position: relative;
+}
+.task-modify-form-wrapper {
+    z-index: 1;
+    position: absolute;
+    top: 97px;
+
+    width: 380px;
+
+    background-color: var(--orange);
+    border-radius: 0 0 10px 10px;
+    border: inherit;
+    border-top: var(--orange) 2px solid;
 }
 [data-priority="low"] {
-    border: green 5px solid;
+    border: var(--green) 5px solid;
 }
 [data-priority="normal"] {
-    border: blue 5px solid;
+    border: var(--blue) 5px solid;
 }
 [data-priority="medium"] {
-    border: yellow 5px solid;
+    border: var(--brown) 5px solid;
 }
 [data-priority="high"] {
-    border: orange 5px solid;
+    border: var(--purple) 5px solid;
 }
 
-.task > .task-content {
+.task-content {
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 1fr 1fr 1fr;
+
+    gap: .5rem;
 }
 .task h4 {
     grid-column: span 2;
+    font-size: 1.3rem;
 }
 .task .task-desc {
     grid-column: span 2;
+    font-size: 1.1rem;
 }
-.task > .task-menu {
+.task-menu {
     display: flex;
     align-items: center;
 }
-.task > .task-menu * {
+.task-menu * {
+    font-size: 1.5rem;
     height: 2.5rem;
     width: auto;
+    margin: .3rem;
 }
 .taskIcon--btn {
     border: none;
@@ -148,15 +204,6 @@ main {
 }
 .taskIcon--btn:hover {
     opacity: .5;
-}
-.task > .task-menu > .taskIcon-complete--btn {
-    color: green;
-}
-.task > .task-menu > .taskIcon-delete--btn {
-    color: red;
-}
-.task > .task-menu > .taskIcon-modify--btn {
-    color: black;
 }
 
 .done {
@@ -199,17 +246,86 @@ footer {
 
 .task-intake {
     width: 50vw;
-    height: 30vh;
+    height: 40vh;
     display: grid;
+    align-items: center;
+    justify-items: center;
 
     background-color: var(--orange);
+    border-radius: 10px;
+    border: 2px var(--grey) solid;
 }
 
+.task-intake form, .task-modify-form-wrapper form {
+    width: 85%;
+}
+
+.task-intake form > div, .task-modify-form-wrapper form > div {
+    width: 100%;
+    margin-bottom: 1rem;
+    padding: .3rem;
+    font-size: 1.17rem;
+    border-bottom: 1px solid var(--grey);
+}
+.task-modify-form-wrapper form > div {
+    font-size: 1rem;
+}
+.task-intake input, .task-modify-form-wrapper input {
+    background: var(--grey);
+    border-radius: 5px 5px 0 0;
+    width: 70%;
+    float: right;
+    padding: .2rem;
+}
+.task-intake label, .task-modify-form-wrapper label {
+    width: 30%;
+}
 .radio--priority-wrapper {
     display: flex;
 }
 .radio--priority-wrapper > div {
     margin-right: 20px;
+}
+.radio-element {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+}
+.radio-element label {
+    width: 100%;
+}
+.radio-element input[type="radio"] {
+    width: 20px;
+    border: none;
+}
+ 
+.div--confirm-button {
+    display: flex;
+    justify-content: center;
+}
+#task-confirm-btn, #task-mod-confirm-btn {
+    align-self: center;
+    width: 50%;
+    border: none;
+    background: var(--grey);
+
+    padding: 10px 20px;
+    border-radius: 10px;
+
+    font-size: 1rem;
+    box-shadow: 3px 3px var(--black);
+}
+#task-confirm-btn:hover, #task-mod-confirm-btn:hover {
+    box-sizing: border-box;
+    outline: 1px solid var(--orange);
+}
+#task-mod-confirm-btn:hover {
+    outline: 1px solid var(--blue);
+}
+#task-confirm-btn:active, #task-mod-confirm-btn:active {
+    box-shadow: none;
+    transform: translate(3px, 3px);
 }
 
 .hidden { /*! HIDDEN */

@@ -99,7 +99,7 @@ export function updateDomWithSortedTasks(name, taskList) {
     taskList.forEach(taskElem => {
         taskUL.insertAdjacentHTML('beforeend', taskElem.getTaskCardElem);
         setTimeout(() => {
-            taskElem.attachEventListener();
+            taskElem.attachEventListenerToTask();
             taskElem.checkCompletion();
         }, 5)
     })
