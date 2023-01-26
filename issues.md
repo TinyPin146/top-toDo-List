@@ -1,3 +1,4 @@
-1. Adding task when in any sorted task menu
-2. Can delete and mod completed task
+1. Adding task when in any sorted task menu - SOLVED // Added logic to check for inserted taskElem. If nothing found the current sorted task is run.
+2. Can delete and mod completed task - SOLVED // Remove event listeners now when task is done. Reattach when undone.
 3. Event listeners are attached twice - SOLVED // Problem was that when loaded from local storage, the cards were created without delay, meaning they got the same ID using miliseconds - SOLUTION: Math.random() * Date.now()
+4. Loading the defProject twice when first loading app. - SOLVED // Created checking logic in index.js for empty localStorage and calling functions accordingly. 

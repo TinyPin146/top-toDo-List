@@ -6,8 +6,10 @@ export function populateStorage() {
     localStorage.setItem('projects', JSON.stringify(projects));
 }
 
-function loadProjectsInLclStorage() {
-    if(localStorage.length) {
+export function loadProjectsInLclStorage() {
+    if(localStorage.length > 0) {
+        console.log(localStorage.length);
+        console.log({message: 'localStorage. loadProInLCStorage', localStorage: localStorage.getItem('projects')});
         const projectsInLocalStorage = JSON.parse(localStorage.getItem('projects'));
         for (const project in projectsInLocalStorage) {
             const loadedProject = new Project(projectsInLocalStorage[project].name);
@@ -26,4 +28,3 @@ function loadProjectsInLclStorage() {
         Project.updateDomWithProject();
     }
 }
-document.addEventListener('DOMContentLoaded', loadProjectsInLclStorage);

@@ -14,8 +14,8 @@ const completedMenuItem = mainMenu.querySelector('.completed');
 const menuItems = [overdueMenuItem, yesterdayMenuItem, todayMenuItem, tomorrowMenuItem, upcomingMenuItem, anytimeMenuItem, completedMenuItem];
 export const menuNames = ['Overdue', 'Yesterday', 'Today', 'Tomorrow', 'Upcoming', 'Anytime', 'Completed']
 
-function sortTasksOnDueDate(e) {
-    const selectedMenuItem = e.currentTarget.textContent;
+export function sortTasksOnDueDate(e) {
+    const selectedMenuItem = e.currentTarget ? e.currentTarget.textContent : e;
     const allTasks = getAllProjectTasks(projects);
 
     switch (selectedMenuItem) {

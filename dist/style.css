@@ -141,6 +141,8 @@ main {
     max-width: 490px;
     display: grid;
     grid-template-columns: 1fr auto;
+    justify-content: space-around;
+    align-items: center;
 
     padding: .5rem;
 
@@ -211,8 +213,6 @@ main {
     border-left: 10px solid green;
     position: relative;
     opacity: .5;
-}
-.done > .task-content, .done > .task-menu {
 }
 .undo-task--wrapper {
     position: absolute;

@@ -2,7 +2,7 @@ import { projects, activeProjectGlobal } from "./projects.js";
 import { toggleHide } from "./util.js";
 import { taskIntakePopup } from "./index.js";
 import { populateStorage } from "./localStorage.js";
-import { addCompletedTasks } from "./sortTasks.js";
+import { addCompletedTasks, sortTasksOnDueDate } from "./sortTasks.js";
 
 export class Task {
     constructor(name, desc, prio, dueDate) {
@@ -46,6 +46,7 @@ export class Task {
         // * taskCard
         const taskDomElem = this.getTaskDomElem;
         // * Complete icon & eventListener
+        if (taskDomElem) {
         const taskIconCompleteBtn = taskDomElem.querySelector('.taskIcon-complete--btn');
         taskIconCompleteBtn.addEventListener('click', this.boundTaskComplete); 
         // * Delete icon & eventListener
@@ -54,6 +55,11 @@ export class Task {
         // * Mod icon & eventListener
         const taskIconModifyBtn = taskDomElem.querySelector('.taskIcon-modify--btn');
         taskIconModifyBtn.addEventListener('click', this.boundTaskModify);
+        }
+        if (!taskDomElem) {
+            const currentSortedTaskOption = document.querySelector('.sorted > h3').textContent;
+            sortTasksOnDueDate(currentSortedTaskOption);
+        }
     }
 
     removeEventListenersFromTask() {
@@ -187,7 +193,7 @@ export class Task {
                 <h4>${taskObj.name}</h4>
                 <p class="task-desc">${taskObj.description}</p>
                 <p>${taskObj.project}</p>
-                <p>${priorityIcon}</p>
+                <p class="task-prio">${priorityIcon}</p>
                 <p>${taskObj.dueDate}</p>
             </div>
             <div class="task-menu">
