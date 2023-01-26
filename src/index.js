@@ -14,7 +14,7 @@ taskIntakePopup.addEventListener('click', util.toggleHideOnPopup);
 addNewProjectInputBtn.addEventListener('click', projects.addProject);
 taskIntakeForm.addEventListener('submit', tasks.addTask);
 
-// if (!localStorage.length) {
-//     console.log({message: 'index. addProject', localStorage: localStorage.getItem('projects')});
-//     projects.addProject(defaultProjectName);
-// }
+if (!localStorage.length) {
+    console.log({message: 'index. addProject', localStorage: localStorage.getItem('projects')});
+    projects.addProject(defaultProjectName);
+}

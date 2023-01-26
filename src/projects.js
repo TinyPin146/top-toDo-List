@@ -51,7 +51,7 @@ export class Project {
             setTimeout(() => {
                 taskObj.attachEventListenerToTask();
                 taskObj.checkCompletion();
-            }, 5);
+            }, 10);
         });
         contentHolder.insertAdjacentElement('afterbegin', projectDiv);
     }

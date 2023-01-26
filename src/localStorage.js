@@ -14,7 +14,6 @@ function loadProjectsInLclStorage() {
             projects[loadedProject.name] = loadedProject;
             setGlobalActiveProject(loadedProject.name)
             Project.addNewProjectToMenu(loadedProject);
-            Project.updateDomWithProject();
             
             const loadedProjectTasks = projectsInLocalStorage[project].tasks;
             loadedProjectTasks.forEach(task => {

@@ -1,4 +1,4 @@
-import { projects, activeProjectGlobal, Project } from "./projects.js";
+import { projects, activeProjectGlobal } from "./projects.js";
 import { toggleHide } from "./util.js";
 import { taskIntakePopup } from "./index.js";
 import { populateStorage } from "./localStorage.js";
@@ -10,12 +10,14 @@ export class Task {
         this.description = desc;
         this.priority = prio;
         this.dueDate = dueDate;
-        this.id = (Date.now()).toString();
+        this.id = Math.random() * (Date.now()).toFixed(0);
         this.isCompleted = false;
         this.project = activeProjectGlobal.name;
         this.boundTaskUncomplete = this.taskUncomplete.bind(this);
         this.boundTaskComplete = this.taskComplete.bind(this);
         this.boundHandleTaskMod = this.taskModUpdateHandle.bind(this);
+        this.boundTaskDelete = this.taskDelete.bind(this);
+        this.boundTaskModify = this.taskModify.bind(this);
     }
 
     get getTaskDomElem() {
@@ -48,10 +50,23 @@ export class Task {
         taskIconCompleteBtn.addEventListener('click', this.boundTaskComplete); 
         // * Delete icon & eventListener
         const taskIconDeleteBtn = taskDomElem.querySelector('.taskIcon-delete--btn');
-        taskIconDeleteBtn.addEventListener('click', this.taskDelete.bind(this));
+        taskIconDeleteBtn.addEventListener('click', this.boundTaskDelete);
         // * Mod icon & eventListener
         const taskIconModifyBtn = taskDomElem.querySelector('.taskIcon-modify--btn');
-        taskIconModifyBtn.addEventListener('click', this.taskModify.bind(this));
+        taskIconModifyBtn.addEventListener('click', this.boundTaskModify);
+    }
+
+    removeEventListenersFromTask() {
+        const taskDomElem = this.getTaskDomElem;
+        // * Complete icon & eventListener
+        const taskIconCompleteBtn = taskDomElem.querySelector('.taskIcon-complete--btn');
+        taskIconCompleteBtn.removeEventListener('click', this.boundTaskComplete); 
+        // * Delete icon & eventListener
+        const taskIconDeleteBtn = taskDomElem.querySelector('.taskIcon-delete--btn');
+        taskIconDeleteBtn.removeEventListener('click', this.boundTaskDelete);
+        // * Mod icon & eventListener
+        const taskIconModifyBtn = taskDomElem.querySelector('.taskIcon-modify--btn');
+        taskIconModifyBtn.removeEventListener('click', this.boundTaskModify);
     }
 
     checkCompletion() {
@@ -61,14 +76,14 @@ export class Task {
     taskComplete() {
         this.setCompletion = true;
         const taskCard = this.getTaskDomElem;
-        const taskIconCompleteBtn = taskCard.querySelector('.taskIcon-complete--btn');
-        const undoTaskBtn = taskCard.querySelector('.undo-task--btn');
+        const undoTaskBtnWrapper = taskCard.querySelector('.undo-task--wrapper');
 
-        taskIconCompleteBtn.removeEventListener('click', this.boundTaskComplete);
+        this.removeEventListenersFromTask();
+
         taskCard.classList.toggle('done');
         
-        undoTaskBtn.classList.toggle('hidden');
-        undoTaskBtn.addEventListener('click', this.boundTaskUncomplete);
+        undoTaskBtnWrapper.classList.toggle('hidden');
+        undoTaskBtnWrapper.addEventListener('click', this.boundTaskUncomplete);
         taskCard.classList.add('hidden');
         populateStorage();
     } 
@@ -83,8 +98,8 @@ export class Task {
         taskCard.classList.toggle('done');
         
         undoTaskBtn.classList.toggle('hidden');
-        taskIconCompleteBtn.addEventListener('click', this.boundTaskComplete);
         taskCard.classList.remove('hidden');
+        this.attachEventListenerToTask();
         addCompletedTasks();
         populateStorage();
     }
@@ -105,9 +120,7 @@ export class Task {
     }
 
     taskModify() {
-        console.log('working');
         const taskCard = this.getTaskDomElem;
-        console.log(taskCard.listeners);
         const taskModFormWrapper = taskCard.querySelector('.task-modify-form-wrapper');
         const taskModForm = taskCard.querySelector('#task-modify-form');
         taskModFormWrapper.classList.toggle('hidden');
@@ -135,13 +148,14 @@ export class Task {
 
     updateTaskContentDOM(taskObj) {
         const taskCard = taskObj.getTaskDomElem;
-        const taskCardTaskContent = document.querySelector('.task-content');
+        const taskCardTaskContent = taskCard.querySelector('.task-content');
 
         taskCard.removeChild(taskCardTaskContent);
         const updatedTaskContent = `
         <div class="task-content">
             <h4>${taskObj.name}</h4>
             <p class="task-desc">${taskObj.description}</p>
+            <p>${taskObj.project}</p>
             <p>${Task.getPriorityIcon(taskObj.priority)}</p>
             <p>${taskObj.dueDate}</p>
         </div>
@@ -166,9 +180,13 @@ export class Task {
         const priorityIcon = Task.getPriorityIcon(taskObj.priority);
         const taskTemplate = `
         <li class="task" id="${taskObj.id}" data-priority="${taskObj.priority}">
+        <div class="undo-task--wrapper hidden">
+            <button class="undo-task--btn">Undo task</button>
+        </div>
             <div class="task-content">
                 <h4>${taskObj.name}</h4>
                 <p class="task-desc">${taskObj.description}</p>
+                <p>${taskObj.project}</p>
                 <p>${priorityIcon}</p>
                 <p>${taskObj.dueDate}</p>
             </div>
@@ -182,9 +200,6 @@ export class Task {
                 <button class="taskIcon-modify--btn taskIcon--btn">
                     🔻
                 </button>
-            </div>
-            <div>
-                <button class="undo-task--btn hidden">Undo task</button>
             </div>
             <div class="task-modify-form-wrapper form hidden">
             <form action="./index.html" method="post" id="task-modify-form">
