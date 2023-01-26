@@ -45,7 +45,7 @@ export function sortTasksOnDueDate(e) {
                 const taskDueDate = new Date(task.dueDate);
                 if (isTomorrow(taskDueDate)) return task;
             });
-            addProject('Today', tomorrowTasks);
+            addProject('Tomorrow', tomorrowTasks);
             break;
         case 'Upcoming': 
             const upcomingTasks = allTasks.filter(task => {
